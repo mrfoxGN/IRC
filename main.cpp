@@ -21,7 +21,7 @@ int main(int ac, char *av[])
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	const int port = atoi(av[1]);
-	if (port < 1)
+	if (port < 1 || port > 65535)
 	{
 		std::cout << "port is not valide" << std::endl;
 		return 1;

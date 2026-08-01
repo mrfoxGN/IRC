@@ -195,7 +195,6 @@ AI-generated suggestions were reviewed, adapted, tested, and validated by the pr
 - `INVITE`
 - `KICK`
 - `MODE`
-- `QUIT`
 
 ## Channel Modes
 
@@ -278,49 +277,11 @@ First recv():   "PASS "
 Second recv():  "123\r\n"
 ```
 
-
 The server rebuilds:
 
 ```text
 PASS 123\r\n
 ```
-
-## Testing
-
-Important test cases include:
-
-- Correct and incorrect passwords
-- Duplicate nicknames
-- Commands before registration
-- Joining and leaving channels
-- Private and channel messages
-- Operator permissions
-- Channel modes
-- Invalid commands
-- Missing parameters
-- Abrupt disconnections
-- Partial commands
-- Several commands received together
-- Large message traffic
-- Memory leaks
-- Invalid memory access
-
-Example partial-data test:
-
-```text
-Type: PA       then press Ctrl+D
-Type: SS       then press Ctrl+D
-Type:  123     then press Enter
-```
-
-The server should rebuild:
-
-```text
-PASS 123\r\n
-```
-
-`Ctrl+D` is handled locally by the terminal. It sends the currently typed bytes without adding a newline. It is not an IRC command.
-
 ## Authors
 
 - `anguenda`

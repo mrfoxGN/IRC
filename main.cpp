@@ -8,6 +8,7 @@ int running = 1;
 
 void handle_signal(int){
 	running = 0;
+	
 }
 
 int main(int ac, char *av[])

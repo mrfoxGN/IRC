@@ -111,6 +111,7 @@ void Server::run(int &running)
 				ev.events = EPOLLIN;
 				ev.data.fd = client_fd;
 				epoll_ctl(_epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);
+
 			}
 			else if (events[i].events & EPOLLIN)
 			{
@@ -143,11 +144,19 @@ void Server::run(int &running)
 
 Server::~Server()
 {
-	if (_epoll_fd >= 0)
-		close(_epoll_fd);
-	if (_listen_fd >= 0)
-		close(_listen_fd);
-	_clients.clear();
+    for (std::map<int, Client>::iterator it = _clients.begin();
+         it != _clients.end(); ++it)
+    {
+        close(it->first);
+    }
+
+    _clients.clear();
+
+    if (_epoll_fd >= 0)
+        close(_epoll_fd);
+
+    if (_listen_fd >= 0)
+        close(_listen_fd);
 }
 
 void Server::processClientBuffer(Client &client)

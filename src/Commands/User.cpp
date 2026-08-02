@@ -18,8 +18,8 @@ void Server::handleUser(Client &client, const std::string &line)
 	std::string command;
 	iss >> command; 
 
-	std::string user, realname;
-	iss >> user;
+	std::string user, hostname, servername, realname;
+	iss >> user >> hostname >> servername;
 
 	std::getline(iss, realname);
 	if (!realname.empty() && realname[0] == ' ')
@@ -27,11 +27,11 @@ void Server::handleUser(Client &client, const std::string &line)
 	if (!realname.empty() && realname[0] == ':')
 		realname.erase(0, 1);
 
-        if (user.empty())
-        {
-                client.sendMsg(":localhost 461 " + (client.getNickname().empty() ? "*" : client.getNickname()) + " USER :Not enough parameters\r\n");
-                return;
-        }
+    if (user.empty() || hostname.empty() || servername.empty())
+    {
+        client.sendMsg(":localhost 461 " + (client.getNickname().empty() ? "*" : client.getNickname()) + " USER :Not enough parameters\r\n");
+        return;
+    }
 	user = "~" + user;
 	
 	if (realname.empty())
@@ -50,7 +50,4 @@ void Server::handleUser(Client &client, const std::string &line)
 	{
 		// Wait for NICK command silently as per IRC protocol
 	}
-	///incorrect implementation of this coommand user in the realneame section
-	//hasUser = true
-    //hasNick = false
 }
